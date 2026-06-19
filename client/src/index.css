@@ -1,0 +1,164 @@
+
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-interface-body selection:bg-primary/30 selection:text-primary;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display-xl tracking-tight;
+  }
+}
+
+@layer components {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  
+  .editorial-divider { 
+    @apply border-b border-outline-variant relative; 
+  }
+  
+  .editorial-divider::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-1/4 h-[1px] bg-primary;
+  }
+  
+  .glass-panel {
+    @apply bg-surface-container-low/60 backdrop-blur-md border border-outline-variant/50 shadow-glass;
+  }
+  
+  .article-card-hover { 
+    @apply transition-all duration-300 ease-out; 
+  }
+  
+  .article-card-hover:hover { 
+    @apply bg-surface-container -translate-y-1 shadow-primary-glow border-primary/30; 
+  }
+  
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+  }
+  
+  .article-card-border {
+    @apply border-b border-outline-variant;
+  }
+  
+  .sticky-sidebar {
+    position: sticky;
+    top: 100px;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ----------------------------------------------------
+   GLOBAL BLACK CARD TYPOGRAPHY & STYLING OVERRIDES
+   ---------------------------------------------------- */
+.bg-surface-container-lowest,
+[class*="bg-surface-container-lowest"] {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Force light text for headings, paragraphs, spans, links, tables, and inputs */
+.bg-surface-container-lowest h1,
+.bg-surface-container-lowest h2,
+.bg-surface-container-lowest h3,
+.bg-surface-container-lowest h4,
+.bg-surface-container-lowest h5,
+.bg-surface-container-lowest h6,
+.bg-surface-container-lowest p,
+.bg-surface-container-lowest span:not(.material-symbols-outlined):not(.bg-primary),
+.bg-surface-container-lowest a,
+.bg-surface-container-lowest li,
+.bg-surface-container-lowest td,
+.bg-surface-container-lowest th,
+.bg-surface-container-lowest input,
+.bg-surface-container-lowest textarea,
+.bg-surface-container-lowest label,
+.bg-surface-container-lowest h3 a {
+  color: #ffffff !important;
+}
+
+/* Force light text to stay light on group hovers */
+.bg-surface-container-lowest:hover h1,
+.bg-surface-container-lowest:hover h2,
+.bg-surface-container-lowest:hover h3,
+.bg-surface-container-lowest:hover h4,
+.bg-surface-container-lowest:hover h5,
+.bg-surface-container-lowest:hover h6,
+.bg-surface-container-lowest:hover p,
+.bg-surface-container-lowest:hover span:not(.material-symbols-outlined):not(.bg-primary),
+.bg-surface-container-lowest:hover a,
+.bg-surface-container-lowest:hover h3 a {
+  color: #ffffff !important;
+}
+
+/* Muted metadata and helper copy inside black cards */
+.bg-surface-container-lowest .text-secondary,
+.bg-surface-container-lowest .text-on-surface-variant,
+.bg-surface-container-lowest .text-secondary-text,
+.bg-surface-container-lowest p.text-secondary,
+.bg-surface-container-lowest span.text-secondary,
+.bg-surface-container-lowest p.text-on-surface-variant,
+.bg-surface-container-lowest span.text-on-surface-variant,
+.bg-surface-container-lowest [class*="text-secondary/"],
+.bg-surface-container-lowest [class*="text-white/"] {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Internal borders inside black cards */
+.bg-surface-container-lowest div,
+.bg-surface-container-lowest section,
+.bg-surface-container-lowest button:not(.bg-primary):not(.bg-white),
+.bg-surface-container-lowest .border,
+.bg-surface-container-lowest .border-t,
+.bg-surface-container-lowest .border-b,
+.bg-surface-container-lowest .border-l,
+.bg-surface-container-lowest .border-r,
+.bg-surface-container-lowest .border-outline-variant {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Force dark input backgrounds and light text inside black cards */
+.bg-surface-container-lowest input,
+.bg-surface-container-lowest textarea,
+.bg-surface-container-lowest select {
+  background-color: #111827 !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.bg-surface-container-lowest input::placeholder,
+.bg-surface-container-lowest textarea::placeholder,
+.bg-surface-container-lowest::placeholder,
+[class*="bg-surface-container-lowest"]::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.bg-surface-container-lowest input:focus,
+.bg-surface-container-lowest textarea:focus,
+.bg-surface-container-lowest select:focus {
+  border-color: var(--color-primary, #6EA8FE) !important;
+  background-color: #1a2336 !important;
+}
+
+/* ── Recharts: suppress focus outline on click ── */
+.recharts-wrapper,
+.recharts-surface,
+.recharts-bar-rectangle,
+.recharts-layer {
+  outline: none !important;
+}

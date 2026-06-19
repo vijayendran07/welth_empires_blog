@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(USER)
+  bio       String?
+  avatarUrl String?
+  articles  Article[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  AUTHOR
+  ADMIN
+}
+
+model Article {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  content     String
+  excerpt     String?
+  coverImage    String?
+  pdfReportUrl  String?
+  pdfReportSize String?
+  published     Boolean  @default(false)
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  customAuthorName    String?
+  customAuthorBio     String?  @db.Text
+  customAuthorAvatar  String?
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
+  tags        Tag[]
+  comments    Comment[]
+  expertTip   String?  @db.Text
+  views       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  articles    Article[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tag {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  slug      String    @unique
+  articles  Article[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Media {
+  id        String   @id @default(uuid())
+  url       String
+  publicId  String   @unique
+  altText   String?
+  createdAt DateTime @default(now())
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  name      String
+  text      String   @db.Text
+  likes     Int      @default(0)
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MessageStatus {
+  UNREAD
+  READ
+}
+
+model ContactMessage {
+  id        String        @id @default(uuid())
+  name      String
+  email     String
+  message   String        @db.Text
+  status    MessageStatus @default(UNREAD)
+  createdAt DateTime      @default(now())
+}
